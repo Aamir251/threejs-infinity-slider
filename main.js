@@ -45,37 +45,9 @@ const material = new THREE.ShaderMaterial({
 })
 
 
-
-
-
-const sceneQuad = new THREE.Scene()
-const materialQuad = new THREE.MeshBasicMaterial({ 
-  transparent : true
-})
-const aspect = sizes.width / sizes.height
-const quadMesh = new THREE.Mesh(
-  new THREE.PlaneGeometry(1, 1),
-  materialQuad
-)
-quadMesh.scale.set(sizes.width, sizes.height)
-sceneQuad.add(quadMesh)
-
-
-/**
- * Background Quad
-*/
-
-const backgroundMeshQuad = new THREE.Mesh(
-  // new THREE.PlaneGeometry(sizes.width, sizes.height),
-  new THREE.PlaneGeometry(1, 1),
-  materialQuad
-)
-backgroundMeshQuad.scale.set(sizes.width, sizes.height, 1)
-backgroundMeshQuad.position.y = 100
-
 /**
  * Meshes and Objects logic
-*/
+ */
 
 const meshes = []
 const numberOfMeshes = 10;
@@ -100,7 +72,6 @@ const addObjects = () =>
       }
     )
     scene.add(mesh)
-
   }
 }
 
@@ -114,7 +85,9 @@ const updateMeshes = () =>
   const positionFactor = - (sizes.width / 2) + sizeofMesh / 2;
 
   meshes.forEach(item => {
-    item.mesh.position.x =  ((item.index * sizeofMesh *  spacingBetweenSlides + currentScroll * sizeofMesh + sizeofMesh) % totalWidth + totalWidth) % totalWidth + positionFactor - sizeofMesh
+    const baseX = item.index * sizeofMesh *  spacingBetweenSlides + currentScroll * sizeofMesh + sizeofMesh
+
+    item.mesh.position.x =  ((baseX) % totalWidth + totalWidth) % totalWidth + positionFactor - sizeofMesh
 
   })
 }
@@ -168,15 +141,13 @@ const tick = () =>
   scroll += (scrollTarget - scroll) * 0.05
   scroll *= 0.9;
   scrollTarget *= 0.9;
-  currentScroll += scroll * 0.005;
+  currentScroll += scroll * 0.005 ;
   updateMeshes()
-  
   // update orbitol controls
   // controls.update()
 
 
   renderer.render(scene, camera)
-
 
   window.requestAnimationFrame(tick)
 }
@@ -192,8 +163,6 @@ const handleResize = () =>
   // update the sizes variable
   sizes.width = window.innerWidth,
   sizes.height = window.innerHeight;
-
-  backgroundMeshQuad.scale.set(sizes.width, sizes.height, 1)
 
   // update camera
   camera.aspect = sizes.width / sizes.height

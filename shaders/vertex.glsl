@@ -1,15 +1,28 @@
 
 varying vec2 vUv;
+varying vec3 newPosition;
+
+
 void main()
 {
     vUv = uv;
-    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
-    // modelPosition.z = sin(position.y * 20.) * 10.;
+    newPosition = position;
+    float distanceFromCenter = abs(
+        (modelMatrix * vec4(position, 1.0)).x
+    );
+    
+    float dist = ( modelMatrix * vec4(position, 1.0)).x;
+    // newPosition.y *= distanceFromCenter * 0.001 + 0.5;
+
+    newPosition.y *= pow(abs(dist * 0.0009), 1.6) + 1.6;
+
+    vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
 
     vec4 viewPosition = viewMatrix * modelPosition;
 
     vec4 projectionPosition = projectionMatrix * viewPosition;
 
     gl_Position = projectionPosition;
+
 }
