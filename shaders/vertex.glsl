@@ -8,14 +8,10 @@ void main()
     vUv = uv;
 
     newPosition = position;
-    float distanceFromCenter = abs(
-        (modelMatrix * vec4(position, 1.0)).x
-    );
     
     float dist = ( modelMatrix * vec4(position, 1.0)).x;
-    // newPosition.y *= distanceFromCenter * 0.001 + 0.5;
 
-    newPosition.y *= pow(abs(dist * 0.0009), 1.6) + 1.6;
+    newPosition.y *= abs(dist * 0.001) + 0.5;
 
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
 

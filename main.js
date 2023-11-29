@@ -90,6 +90,7 @@ const updateMeshes = () =>
     item.mesh.position.x =  ((baseX) % totalWidth + totalWidth) % totalWidth + positionFactor - sizeofMesh
 
   })
+
 }
 
 /**
@@ -151,6 +152,7 @@ const tick = () =>
 
   window.requestAnimationFrame(tick)
 }
+
 
 tick()
 
