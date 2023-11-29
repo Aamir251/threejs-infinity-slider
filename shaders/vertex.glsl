@@ -10,8 +10,8 @@ void main()
     newPosition = position;
     
     float dist = ( modelMatrix * vec4(position, 1.0)).x;
-
-    newPosition.y *= abs(dist * 0.001) + 0.5;
+    
+    newPosition.y *= pow(abs(dist * 0.0009), 1.6) + 1.6;
 
     vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
 
